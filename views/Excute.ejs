@@ -8,8 +8,39 @@
     <title>Admin</title>
 </head>
 <body>
-<form action="/DB/ExcuteQuery" method="post">
-    <input type="text" placeholder="Statement" name="statement">
+<%if (all) {
+    console.log(all[0].a)
+}%>
+
+<table>
+    <thead>
+    <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+    </tr>
+    <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+    </tr>
+    <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+    </tr>
+    </tbody>
+</table>
+
+<form action="/DB/Excute" method="post">
+    <textarea type="text" placeholder="Statement" cols="40" rows="5" name="statement"></textarea>
     <input type="submit" value="Ok">
 </form>
 </body>

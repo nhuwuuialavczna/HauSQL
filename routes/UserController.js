@@ -56,9 +56,15 @@ router.post('/Login', function (req, res, next) {
             res.render('Index', {re: 'Username or password is correct !', sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
-            res.render("Excute", {sess: req.session.acc});
+            var userdb = new sqlite3.Database('database\\' + username + '.db');
+            userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
+                var a = [];
+                row.forEach(function (t) {
+                    a.push(t.name);
+                });
+                res.render('Index', {re: a, sess: req.session.acc});
+            });
         }
-
         // res.send('aa');
     });
 });
@@ -90,9 +96,20 @@ router.post('/Register', function (req, res, next) {
                     res.render('Index', {re: "Has occurred an error"});
                     return;
                 }
-                // var db = new sqlite3.Database('database\\' + username + '.db');
+                var db = new sqlite3.Database('database\\' + username + '.db');
                 req.session.acc = new users(username, pass1, pass2, email, key, info);
-                res.render("Excute", {sess: req.session.acc});
+                var userdb = new sqlite3.Database('database\\' + username + '.db');
+                userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
+                    var a = [];
+                    if (row != null && row.length > 0) {
+                        row.forEach(function (t) {
+                            a.push(t.name);
+                        });
+                    }
+                    res.render('Index', {re: a, sess: req.session.acc});
+                });
+
+
             });
         }
     });
