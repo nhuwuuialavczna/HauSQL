@@ -6,17 +6,52 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HSQL</title>
+
 </head>
 <body>
-<form action="/Users/Login" method="post">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" placeholder="password">
+<form action="/Users/Login" method="post" id="login" onsubmit="return login()">
+    <input type="text" name="username" id="username" placeholder="username">
+    <input type="password" name="password1" id="password1" placeholder="password 1">
+    <input type="password" name="password2" id="password2" placeholder="password 2">
     <input type="submit" value="Login">
+    <p style="color:red;"><%= re %></p>
 </form>
 <hr>
-<!--<form action="/Users/Resgiter" method="post">-->
-    <!--<input type="text" placeholder="username">-->
-    <!--<input type="submit" value="Login">-->
-<!--</form>-->
+<form action="/Users/Resgiter" method="post" id="register" onsubmit="return reg()">
+    <input type="text" name="user" id="user" placeholder="username">
+    <input type="text" name="pass1" id="pass1" placeholder="pass1">
+    <input type="text" name="pass2" id="pass2" placeholder="pass2">
+    <input type="submit" value="Register">
+</form>
 </body>
+<script>
+    function kt(str) {
+        if (!/^[a-zA-Z0-9- ]*$/.test(str)) {
+            return false;
+        }
+        return true;
+    }
+
+    var login = function () {
+        var username = document.getElementById('username').value;
+        var password1 = document.getElementById('password1').value;
+        var password2 = document.getElementById('password2').value;
+        if (!kt(username) || !kt(password1) || !kt(password2) || username.length === 0 || password1.length === 0 || password2.length === 0 || username.length > 10 || password1.length > 10 || password2.length > 10) {
+            alert('Fields must not be empty, no larger than 9 characters and no special characters');
+            return false;
+        }
+        return true;
+    };
+
+    var reg = function () {
+        var username = document.getElementById('user').value;
+        var password1 = document.getElementById('pass1').value;
+        var password2 = document.getElementById('pass2').value;
+        if (!kt(username) || !kt(password1) || !kt(password2) || username.length === 0 || password1.length === 0 || password2.length === 0 || username.length > 10 || password1.length > 10 || password2.length > 10) {
+            alert('Fields must not be empty, no larger than 9 characters and no special characters');
+            return false;
+        }
+        return true;
+    };
+</script>
 </html>
