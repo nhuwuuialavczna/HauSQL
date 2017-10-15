@@ -3,24 +3,30 @@ var router = express.Router();
 var body = require('body-parser');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('login.db');
+var re = function () {
+
+};
+re.prototype.result = function (s) {
+    return s;
+};
+
+
 /* GET users listing. */
 router.post('/Login', function (req, res, next) {
     console.log(req.body.username);
     var sql = 'select * from hau';
+    // var a = [];
     db.all(sql, function (err, row) {
         if (err) {
-            return console.error(err.message);
+            res.send(err);
         }
-        row.forEach(function (t) {
-            alert(t.a);
-        });
+        res.send(row);
     });
-    res.send('respond with a resource');
 });
 
 router.post('/Register', function (req, res, next) {
 
-    res.send('respond with a resource');
+    res.send(a);
 });
 
 module.exports = router;
