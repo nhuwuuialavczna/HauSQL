@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var body = require('body-parser');
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('login.dba');
+var db = new sqlite3.Database('login.db');
 var re = function () {
 
 };
