@@ -20,7 +20,7 @@ router.post('/Login', function (req, res, next) {
         if (err) {
             res.send(err);
         }
-        res.send(row);
+        res.send('z');
     });
 });
 
