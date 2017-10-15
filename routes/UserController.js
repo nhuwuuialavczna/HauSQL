@@ -90,7 +90,7 @@ router.post('/Register', function (req, res, next) {
                     res.render('Index', {re: "Has occurred an error"});
                     return;
                 }
-                var db = new sqlite3.Database('database\\' + username + '.db');
+                // var db = new sqlite3.Database('database\\' + username + '.db');
                 req.session.acc = new users(username, pass1, pass2, email, key, info);
                 res.render("Excute", {sess: req.session.acc});
             });
