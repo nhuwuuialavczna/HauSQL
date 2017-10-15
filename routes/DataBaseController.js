@@ -15,7 +15,7 @@ var connection = function (sql, key, username, db) {
                 return err.message;
             }
         });
-        return 'Add table complete';
+        return 'Success';
     };
 
     this.addRow = function () {
@@ -25,7 +25,7 @@ var connection = function (sql, key, username, db) {
                 return err.message;
             }
         });
-        return 'Excute query successfully';
+        return 'Success';
     };
 };
 
