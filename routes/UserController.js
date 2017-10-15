@@ -56,7 +56,7 @@ router.post('/Login', function (req, res, next) {
             res.render('Index', {re: 'Username or password is correct !', sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
-            res.render("DBManagement", {sess: req.session.acc});
+            res.render("Excute", {sess: req.session.acc});
         }
 
         // res.send('aa');
