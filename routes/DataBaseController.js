@@ -111,8 +111,10 @@ router.post('/ExcuteTable', function (req, res, next) {
 router.get('/Return', function (req, res) {
     var ss = req.session.acc;
     var inforTable = req.session.inforTable;
+    console.log(inforTable);
     var db = new sqlite3.Database('database\\' + ss.username + '.db');
     if (typeof inforTable !== 'undefined') {
+        console.log('co vào đây !');
         var sql = "select * from " + inforTable.name;
         // var conn = new connection(sql, db);
         db.all(sql, function (err, row) {
@@ -162,6 +164,7 @@ router.get('/Manage', function (req, res, next) {
             row.forEach(function (t) {
                 a.push(t);
             });
+            req.session.inforTable = inforTable;
             res.render('Excute', {all: "", sess: ss, re: a, inforTable: inforTable});
         });
     });
