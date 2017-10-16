@@ -84,6 +84,7 @@ router.post('/ExcuteTable', function (req, res, next) {
             return;
         }
         res.redirect('/DB/Return');
+        return;
     }
 
     if (action.toUpperCase() === 'DELETE') {
@@ -93,6 +94,7 @@ router.post('/ExcuteTable', function (req, res, next) {
             return;
         }
         res.redirect('/DB/Return');
+        return;
     }
     if (action.toUpperCase() === 'UPDATE') {
         var upd = conn.update();
@@ -101,7 +103,9 @@ router.post('/ExcuteTable', function (req, res, next) {
             return;
         }
         res.redirect('/DB/Return');
+        return;
     }
+    res.redirect("/Error/ExcuteError?message=" + sql);
 });
 
 router.get('/Return', function (req, res) {
