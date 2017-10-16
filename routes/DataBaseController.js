@@ -55,39 +55,42 @@ var connection = function (sql, db, key, username) {
 router.get('/ExcuteQuery', function (req, res, next) {
     var sql = req.param('st');
     var key = req.param('key');
-
     var exc = "select * from account where key='" + key + "'";
     db.all(exc, function (err, row) {
+        if (row.length > 0) {
+            res.send("Key does not exist !");
+            return;
+        }
         if (err) {
-            res.send({"status":"Key does not exist !" + err.message});
+            res.send("Key does not exist !");
         } else {
             row.forEach(function (t) {
                 var us = t;
                 if (us.info === 'yes') {
                     var dbUser = new sqlite3.Database('database\\' + us.username + '.db');
-                    if(sql.split(' ')[0].toUpperCase().trim() === 'SELECT') {
+                    if (sql.split(' ')[0].toUpperCase().trim() === 'SELECT') {
                         dbUser.all(sql, function (err, row) {
                             if (err) {
-                                res.json({"status":"Excute fail ! Check my query"});
+                                res.send("Excute fail ! Check my query");
                                 return;
                             }
                             var xxx = [];
                             row.forEach(function (t2) {
-                               xxx.push(t2);
+                                xxx.push(t2);
                             });
-                            res.json({"result":xxx});
+                            res.json({"result": xxx});
                         });
-                    }else{
+                    } else {
                         dbUser.run(sql, function (err, row) {
                             if (err) {
                                 res.send("Excute fail ! Check my query");
                                 return;
                             }
-                            res.json({"status":"Success"});
+                            res.send("Success");
                         });
                     }
                 } else {
-                    res.json({"status":"Account clocked ! You can't excute query. Please unclock !"});
+                    res.send("Account clocked ! You can't excute query. Please unclock !");
                 }
             });
         }
