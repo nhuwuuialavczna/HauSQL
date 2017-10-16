@@ -53,7 +53,7 @@ router.post('/Login', function (req, res, next) {
             return;
         }
         if (row.length == 0) {
-            res.render('Index', {re: 'Username or password is correct !', sess: req.session.acc});
+            res.redirect('/Home/Index', {re: 'Username or password is correct !', sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
             var userdb = new sqlite3.Database('database\\' + username + '.db');
@@ -62,7 +62,7 @@ router.post('/Login', function (req, res, next) {
                 row.forEach(function (t) {
                     a.push(t.name);
                 });
-                res.render('Index', {re: a, sess: req.session.acc});
+                res.redirect('/Home/Index', {re: a, sess: req.session.acc});
             });
         }
     });
