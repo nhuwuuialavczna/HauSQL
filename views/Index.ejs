@@ -9,7 +9,7 @@
 
 </head>
 <body>
-
+<%include menu.ejs%>
 <% if(sess == null){ %>
 <center>
     <p>Login</p>
@@ -40,6 +40,9 @@
     <input type="submit" value="New table">
 </form>
 <% } %>
+
+<br><br>
+<%include footer.ejs%>
 </body>
 <script>
 

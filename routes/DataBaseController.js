@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var body = require('body-parser');
 var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('login.db');
 /* GET users listing. */
 
 var connection = function (sql, db, key, username) {
@@ -52,11 +53,11 @@ var connection = function (sql, db, key, username) {
 
 // day la khu vuc cho thuc thi bang key
 router.post('/ExcuteQuery', function (req, res, next) {
-    var sql = req.body.statement;
-    var ss = req.session.acc;
-    var db = new sqlite3.Database('database\\' + ss.username + '.db');
+    var sql = req.param('statement');
+    var key = req.param('key');
+    var dbUser = new sqlite3.Database('database\\' + ss.username + '.db');
     var conn = new connection(sql, db, ss.key, ss.username);
-    // res.send(conn.addTable());
+    var exc= "select * from account where key='"+key+"'";
 });
 // day la khu vuc thuc thi cau lenh bang key
 
