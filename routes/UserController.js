@@ -101,11 +101,11 @@ router.post('/Register', function (req, res, next) {
                 var userdb = new sqlite3.Database('database\\' + username + '.db');
                 userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
                     var a = [];
-                    if (row != null && row.length > 0) {
-                        row.forEach(function (t) {
-                            a.push(t.name);
-                        });
-                    }
+                    // if (row != null && row.length > 0) {
+                    //     row.forEach(function (t) {
+                    //         a.push(t.name);
+                    //     });
+                    // }
                     res.render('Index', {re: a, sess: req.session.acc});
                 });
 

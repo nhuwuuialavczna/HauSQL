@@ -8,9 +8,13 @@
     <title>Admin</title>
 </head>
 <body>
-<%if (all) {
-    console.log(all[0].a)
-}%>
+<% if (re) {
+    console.log(re + "\t" + re.length);
+}
+if (inforTable) {
+    console.log(inforTable.listCol[0].columname + "\t" + inforTable.name);
+}
+%>
 
 <table>
     <thead>
@@ -39,7 +43,7 @@
     </tbody>
 </table>
 
-<form action="/DB/Excute" method="post">
+<form action="/DB/ExcuteTable" method="post">
     <textarea type="text" placeholder="Statement" cols="40" rows="5" name="statement"></textarea>
     <input type="submit" value="Ok">
 </form>
