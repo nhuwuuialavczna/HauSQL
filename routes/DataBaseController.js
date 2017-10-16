@@ -164,8 +164,6 @@ router.get('/Manage', function (req, res, next) {
             });
             res.render('Excute', {all: "", sess: ss, re: a, inforTable: inforTable});
         });
-
-
     });
 });
 
