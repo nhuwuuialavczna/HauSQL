@@ -53,7 +53,7 @@ router.post('/Login', function (req, res, next) {
             return;
         }
         if (row.length == 0) {
-            res.redirect('/Home/Index', {re: 'Username or password is correct !', sess: req.session.acc});
+            res.render('Index', {re: 'Username or password is correct !', sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
             var userdb = new sqlite3.Database('database\\' + username + '.db');
@@ -62,7 +62,7 @@ router.post('/Login', function (req, res, next) {
                 row.forEach(function (t) {
                     a.push(t.name);
                 });
-                res.redirect('/Home/Index', {re: a, sess: req.session.acc});
+                res.render('Index', {re: a, sess: req.session.acc});
             });
         }
     });
@@ -76,11 +76,11 @@ router.post('/Register', function (req, res, next) {
     var sql = "select * from account where username='" + username + "'";
     db.all(sql, function (err, row) {
         if (err) {
-            res.render('/Home/Index', {re: "Has occurred an error"});
+            res.render('Index', {re: "Has occurred an error"});
             return;
         }
         if (row.length > 0) {
-            res.render('/Home/Index', {re: 'Account already exists'});
+            res.render('Index', {re: 'Account already exists'});
         } else {
             var key = (username + pass1 + pass2).substr(0, 9);
             var info = 'rw';
@@ -92,7 +92,7 @@ router.post('/Register', function (req, res, next) {
                 "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + username + "','" + key + "','" + email + "','" + info + "')";
             db.run(sql, function (err) {
                 if (err) {
-                    res.render('/Home/Index', {re: "Has occurred an error"});
+                    res.render('Index', {re: "Has occurred an error"});
                     return;
                 }
                 var db = new sqlite3.Database('database\\' + username + '.db');
@@ -100,7 +100,7 @@ router.post('/Register', function (req, res, next) {
                 var userdb = new sqlite3.Database('database\\' + username + '.db');
                 userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
                     var a = [];
-                    res.render('/Home/Index', {re: a, sess: req.session.acc});
+                    res.render('Index', {re: a, sess: req.session.acc});
                 });
 
 
