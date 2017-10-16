@@ -75,7 +75,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
                             row.forEach(function (t2) {
                                xxx.push(t2);
                             });
-                            res.send(xxx);
+                            res.send({result:xxx});
                         });
                     }else{
                         dbUser.run(sql, function (err, row) {
@@ -83,7 +83,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
                                 res.send("Excute fail ! Check my query");
                                 return;
                             }
-                            res.send("Success");
+                            res.send({status:"Success"});
                         });
                     }
                 } else {
