@@ -42,8 +42,9 @@
 <% }else{ %>
 <center>
 
-    <% if(re.length > 0){re.forEach(function (t) { %>
+    <% if(re.length > 0){%>
     <p>This is list table of you. You can manage them with sql query or js query</p>
+    <%re.forEach(function (t) { %>
     <a href="/DB/Manage?tb=<%= t %>"><%= t %></a> |
     <% })}else{ %>
     <p>No table</p>
