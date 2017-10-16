@@ -65,7 +65,6 @@ router.post('/Login', function (req, res, next) {
                 res.render('Index', {re: a, sess: req.session.acc});
             });
         }
-        // res.send('aa');
     });
 });
 
