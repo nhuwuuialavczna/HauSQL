@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cors = require('cors');
 
 var home = require('./routes/HomeController');
 var users = require('./routes/UserController');
@@ -12,6 +13,8 @@ var db = require('./routes/DataBaseController');
 var error = require('./routes/ErrorController');
 
 var app = express();
+
+app.use(cors());
 app.use(session({secret: 'ssshhhhh', saveUninitialized: true, resave: true}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
