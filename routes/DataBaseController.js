@@ -53,12 +53,46 @@ var connection = function (sql, db, key, username) {
 
 // day la khu vuc cho thuc thi bang key
 router.get('/ExcuteQuery', function (req, res, next) {
-    var sql = req.param('statement');
+    var sql = req.param('st');
     var key = req.param('key');
-    // var dbUser = new sqlite3.Database('database\\' + ss.username + '.db');
-    // var conn = new connection(sql, db, ss.key, ss.username);
-    // var exc= "select * from account where key='"+key+"'";
-    res.send(sql + "|" + key);
+
+    var exc = "select * from account where key='" + key + "'";
+    db.all(exc, function (err, row) {
+        if (err) {
+            res.send("Key does not exist !" + err.message);
+        } else {
+            row.forEach(function (t) {
+                var us = t;
+                if (us.info === 'yes') {
+                    var dbUser = new sqlite3.Database('database\\' + us.username + '.db');
+                    if(sql.split(' ')[0].toUpperCase().trim() === 'SELECT') {
+                        dbUser.all(sql, function (err, row) {
+                            if (err) {
+                                res.send("Excute fail ! Check my query");
+                                return;
+                            }
+                            var xxx = [];
+                            row.forEach(function (t2) {
+                               xxx.push(t2);
+                            });
+                            res.send(xxx);
+                        });
+                    }else{
+                        dbUser.run(sql, function (err, row) {
+                            if (err) {
+                                res.send("Excute fail ! Check my query");
+                                return;
+                            }
+                            res.send("Success");
+                        });
+                    }
+                } else {
+                    res.send("Account clocked ! You can't excute query. Please unclock !");
+                }
+            });
+        }
+    });
+    // res.send(sql + "|" + key);
 });
 // day la khu vuc thuc thi cau lenh bang key
 

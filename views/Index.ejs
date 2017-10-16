@@ -41,11 +41,13 @@
 </center>
 <% }else{ %>
 <center>
-    <p>No table</p>
+
     <% if(re.length > 0){re.forEach(function (t) { %>
     <p>This is list table of you. You can manage them with sql query or js query</p>
     <a href="/DB/Manage?tb=<%= t %>"><%= t %></a> |
-    <% })} %>
+    <% })}else{ %>
+    <p>No table</p>
+    <%}%>
     <form action="/DB/CreateTB" method="post">
         <textarea id="" name="excute" cols="80" rows="15" placeholder="Statement"></textarea><br>
         <input type="submit" value="New table">
