@@ -4,6 +4,7 @@ var body = require('body-parser');
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('login.db');
+var nodemailer = require('nodemailer');
 var re = function () {
 
 };
@@ -53,7 +54,7 @@ router.post('/Login', function (req, res, next) {
             return;
         }
         if (row.length == 0) {
-            res.render('Index', {re: 'Username or password is correct !', sess: req.session.acc});
+            res.render('Index', {re: 'Username or password is correct !',notifi:"", sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
             var userdb = new sqlite3.Database('database\\' + username + '.db');
@@ -62,11 +63,44 @@ router.post('/Login', function (req, res, next) {
                 row.forEach(function (t) {
                     a.push(t.name);
                 });
-                res.render('Index', {re: a, sess: req.session.acc});
+                res.render('Index', {re: a,notifi:"", sess: req.session.acc});
             });
         }
     });
 });
+
+var options = function (from, to, subject, text) {
+    this.from = from;
+    this.to = to;
+    this.subject = subject;
+    this.text = text;
+    return {
+        form: this.from,
+        to: this.to,
+        subject: this.subject,
+        text: this.text
+    }
+
+    // from: 'youremail@gmail.com',
+    // to: 'myfriend@yahoo.com',
+    // subject: 'Sending Email using Node.js',
+    // text: 'That was easy!'
+};
+
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'nguyentanhau165997@gmail.com',
+        pass: 'Abcdabcd1'
+    },
+    secure: false,
+    port: 25,
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
 
 router.post('/Register', function (req, res, next) {
     var username = req.body.user;
@@ -76,14 +110,14 @@ router.post('/Register', function (req, res, next) {
     var sql = "select * from account where username='" + username + "'";
     db.all(sql, function (err, row) {
         if (err) {
-            res.render('Index', {re: "Has occurred an error"});
+            res.render('Index', {re: "Has occurred an error",notifi:null,sess:null});
             return;
         }
         if (row.length > 0) {
-            res.render('Index', {re: 'Account already exists'});
+            res.render('Index', {re: 'Account already exists',notifi:null,sess:null});
         } else {
             var key = (username + pass1 + pass2).substr(0, 9);
-            var info = 'rw';
+            var info = 'yes';
             // var languages = [username, pass1, pass2, key, email, info];
             // var placeholders = languages.map(function (language) {
             //     return '(?)';
@@ -92,23 +126,29 @@ router.post('/Register', function (req, res, next) {
                 "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + username + "','" + key + "','" + email + "','" + info + "')";
             db.run(sql, function (err) {
                 if (err) {
-                    res.render('Index', {re: "Has occurred an error"});
+                    res.render('Index', {re: "Has occurred an error",notifi:null, sess: req.session.acc});
                     return;
                 }
                 // var db = new sqlite3.Database('database\\' + username + '.db');
-                req.session.acc = new users(username, pass1, pass2, email, key, info);
+                req.session.acc = new users(username, pass1, pass2,  key,email, info);
                 var userdb = new sqlite3.Database('database\\' + username + '.db');
                 userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
                     var a = [];
-                    res.render('Index', {re: a, sess: req.session.acc});
+                    var mailOptions = new options('Nguyen tan hau', email, 'Key of JSQL', key);
+                    // console.log(mailOptions);
+                    // console.log(transporter);
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            res.render('Index', {re: "Has occurred an error when send key to you",notifi:null, sess: req.session.acc});
+                        } else {
+                            res.render('Index', {re: a,notifi:"Check your mail, we sent key to you", sess: req.session.acc});
+                        }
+                    });
                 });
-
-
             });
         }
     });
 });
-
 
 
 module.exports = router;

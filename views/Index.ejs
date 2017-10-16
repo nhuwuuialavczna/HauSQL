@@ -10,6 +10,11 @@
 </head>
 <body>
 <% include menu.ejs %>
+<center>
+    <p style="color: red">
+        <%= (notifi) ? notifi : "" %>
+    </p>
+</center>
 <% if(sess == null){ %>
 <center>
     <div style="width: 30%">

@@ -5,4 +5,8 @@
     Time: 2 days<br>
     Subject: HCI
     <a href="Doc/ViewDoc">Documentation</a>
+    <br>
+    <% if(sess != null){ %>
+    <p>Hi <%= sess.username%>, Welcome  to JSQL</p>
+    <% } %>
 </center>

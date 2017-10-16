@@ -52,12 +52,13 @@ var connection = function (sql, db, key, username) {
 };
 
 // day la khu vuc cho thuc thi bang key
-router.post('/ExcuteQuery', function (req, res, next) {
+router.get('/ExcuteQuery', function (req, res, next) {
     var sql = req.param('statement');
     var key = req.param('key');
-    var dbUser = new sqlite3.Database('database\\' + ss.username + '.db');
-    var conn = new connection(sql, db, ss.key, ss.username);
-    var exc= "select * from account where key='"+key+"'";
+    // var dbUser = new sqlite3.Database('database\\' + ss.username + '.db');
+    // var conn = new connection(sql, db, ss.key, ss.username);
+    // var exc= "select * from account where key='"+key+"'";
+    res.send(sql + "|" + key);
 });
 // day la khu vuc thuc thi cau lenh bang key
 
