@@ -57,7 +57,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
     var key = req.param('key');
     var exc = "select * from account where key='" + key + "'";
     db.all(exc, function (err, row) {
-        if (row.length > 0) {
+        if (row.length == 0) {
             res.send("Key does not exist !");
             return;
         }
