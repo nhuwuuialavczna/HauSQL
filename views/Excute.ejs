@@ -15,7 +15,7 @@
 </head>
 <body>
 <center>
-    <% if(re != null && re.length > 0 && inforTable != null){
+    <% if(inforTable != null){
     %>
     <table>
         <thead>
@@ -28,6 +28,7 @@
         </tr>
         </thead>
         <tbody>
+        <% if(re != null && re.length > 0 ){ %>
         <% re.forEach(function (t) { %>
         <tr>
             <% var x = JSON.stringify(t);
@@ -49,7 +50,7 @@
         <% }) %>
         </tbody>
     </table>
-    <% } %>
+    <% }} %>
     <br><br><br>
     <form action="/DB/ExcuteTable" method="post">
         <textarea type="text" placeholder="Statement" cols="80" rows="15" name="statement"></textarea><br>
