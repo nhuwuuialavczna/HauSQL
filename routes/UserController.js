@@ -134,16 +134,17 @@ router.post('/Register', function (req, res, next) {
                 var userdb = new sqlite3.Database('database\\' + username + '.db');
                 userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
                     var a = [];
-                    var mailOptions = new options('Nguyen tan hau', email, 'Key of JSQL', key);
-                    // console.log(mailOptions);
-                    // console.log(transporter);
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            res.render('Index', {re: "Has occurred an error when send key to you",notifi:null, sess: req.session.acc});
-                        } else {
-                            res.render('Index', {re: a,notifi:"Check your mail, we sent key to you", sess: req.session.acc});
-                        }
-                    });
+                    // var mailOptions = new options('Nguyen tan hau', email, 'Key of JSQL', key);
+                    // // console.log(mailOptions);
+                    // // console.log(transporter);
+                    // transporter.sendMail(mailOptions, function (error, info) {
+                    //     if (error) {
+                    //         res.render('Index', {re: "Has occurred an error when send key to you",notifi:null, sess: req.session.acc});
+                    //     } else {
+                    //         res.render('Index', {re: a,notifi:"Check your mail, we sent key to you", sess: req.session.acc});
+                    //     }
+                    // });
+                    res.render('Index', {re: a,notifi:"This is your key. We only provided. If you forget it, please contact us", sess: req.session.acc});
                 });
             });
         }
