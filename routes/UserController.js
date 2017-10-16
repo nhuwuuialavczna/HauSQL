@@ -144,7 +144,7 @@ router.post('/Register', function (req, res, next) {
                     //         res.render('Index', {re: a,notifi:"Check your mail, we sent key to you", sess: req.session.acc});
                     //     }
                     // });
-                    res.render('Index', {re: a,notifi:"This is your key. We only provided. If you forget it, please contact us", sess: req.session.acc});
+                    res.render('Index', {re: a,notifi:"This is your key: "+key+". We only provided. If you forget it, please contact us", sess: req.session.acc});
                 });
             });
         }
