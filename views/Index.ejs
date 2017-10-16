@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<%include menu.ejs%>
+<% include menu.ejs %>
 <% if(sess == null){ %>
 <center>
     <p>Login</p>
@@ -29,20 +29,21 @@
         <input type="text" name="email" id="email" placeholder="Email"><br><br>
         <input type="submit" value="Register">
     </form>
-</center>
-<% }else{ %>
-<p>This is list table of you. You can manage them with sql query or js query</p>
-<% if(re.length > 0){re.forEach(function (t) { %>
-<a href="/DB/Manage?tb=<%= t %>"><%= t %></a>
-<% })} %>
-<form action="/DB/CreateTB" method="post">
-    <textarea id="" name="excute" rows="5" cols="20"></textarea>
-    <input type="submit" value="New table">
-</form>
-<% } %>
 
-<br><br>
-<%include footer.ejs%>
+    <% }else{ %>
+    <p>This is list table of you. You can manage them with sql query or js query</p>
+    <% if(re.length > 0){re.forEach(function (t) { %>
+    <a href="/DB/Manage?tb=<%= t %>"><%= t %></a>
+    <% })} %>
+    <form action="/DB/CreateTB" method="post">
+        <textarea id="" name="excute"  cols="80" rows="15"></textarea><br>
+        <input type="submit" value="New table">
+    </form>
+    <% } %>
+
+    <br><br>
+</center>
+<% include footer.ejs %>
 </body>
 <script>
 
