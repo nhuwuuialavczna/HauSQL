@@ -59,7 +59,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
     var exc = "select * from account where key='" + key + "'";
     db.all(exc, function (err, row) {
         if (err) {
-            res.send("Key does not exist !" + err.message);
+            res.send({"status":"Key does not exist !" + err.message});
         } else {
             row.forEach(function (t) {
                 var us = t;
@@ -68,7 +68,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
                     if(sql.split(' ')[0].toUpperCase().trim() === 'SELECT') {
                         dbUser.all(sql, function (err, row) {
                             if (err) {
-                                res.send("Excute fail ! Check my query");
+                                res.json({"status":"Excute fail ! Check my query"});
                                 return;
                             }
                             var xxx = [];
@@ -87,7 +87,7 @@ router.get('/ExcuteQuery', function (req, res, next) {
                         });
                     }
                 } else {
-                    res.send("Account clocked ! You can't excute query. Please unclock !");
+                    res.json({"status":"Account clocked ! You can't excute query. Please unclock !"});
                 }
             });
         }
