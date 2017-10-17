@@ -50,14 +50,15 @@ router.get('/ExcuteACC', function (req, res, next) {
                 if (row.length > 0) {
                     res.send('Account already exists !');
                 } else {
+                    var keyNew = (username + pass1 + pass2).substr(0, 9);
                     var sql = "INSERT INTO account " +
-                        "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + pass2 + "','" + key + "','" + email + "','yes')";
+                        "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + pass2 + "','" + keyNew + "','" + "none" + "','yes')";
                     db.run(sql, function (err) {
                         if (err) {
                             res.render("Has occurred an error");
                             return;
                         }
-                        var keyNew = (username + pass1 + pass2).substr(0, 9);
+
                         res.send("Created account " + username + " with key " + keyNew + ". We only provided. If you forget it, please contact us");
                     });
                 }
