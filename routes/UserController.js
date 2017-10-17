@@ -54,7 +54,7 @@ router.post('/Login', function (req, res, next) {
             return;
         }
         if (row.length == 0) {
-            res.render('Index', {re: 'Username or password is correct !',notifi:"", sess: req.session.acc});
+            res.render('Index', {re: 'Username or password is correct !', notifi: "", sess: req.session.acc});
         } else {
             req.session.acc = new users(row[0].username, row[0].pass1, row[0].pass2, row[0].key, row[0].email, row[0].info);
             var userdb = new sqlite3.Database('database\\' + username + '.db');
@@ -63,7 +63,7 @@ router.post('/Login', function (req, res, next) {
                 row.forEach(function (t) {
                     a.push(t.name);
                 });
-                res.render('Index', {re: a,notifi:"", sess: req.session.acc});
+                res.render('Index', {re: a, notifi: "", sess: req.session.acc});
             });
         }
     });
@@ -87,19 +87,19 @@ var options = function (from, to, subject, text) {
     // text: 'That was easy!'
 };
 
-
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'nguyentanhau165997@gmail.com',
-        pass: 'Abcdabcd1'
-    },
-    secure: false,
-    // port: process.env.PORT || 25,
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+//
+// var transporter = nodemailer.createTransport({
+//     service: 'Gmail',
+//     auth: {
+//         user: 'nguyentanhau165997@gmail.com',
+//         pass: 'Abcdabcd1'
+//     },
+//     secure: false,
+//     // port: process.env.PORT || 25,
+//     tls: {
+//         rejectUnauthorized: false
+//     }
+// });
 
 
 router.post('/Register', function (req, res, next) {
@@ -110,11 +110,11 @@ router.post('/Register', function (req, res, next) {
     var sql = "select * from account where username='" + username + "'";
     db.all(sql, function (err, row) {
         if (err) {
-            res.render('Index', {re: "Has occurred an error",notifi:null,sess:null});
+            res.render('Index', {re: "Has occurred an error", notifi: null, sess: null});
             return;
         }
         if (row.length > 0) {
-            res.render('Index', {re: 'Account already exists',notifi:null,sess:null});
+            res.render('Index', {re: 'Account already exists', notifi: null, sess: null});
         } else {
             var key = (username + pass1 + pass2).substr(0, 9);
             var info = 'yes';
@@ -123,20 +123,20 @@ router.post('/Register', function (req, res, next) {
             //     return '(?)';
             // }).join(',');
             var sql = "INSERT INTO account " +
-                "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + username + "','" + key + "','" + email + "','" + info + "')";
+                "(username,pass1, pass2,key,email,info) VALUES('" + username + "','" + pass1 + "','" + pass2 + "','" + key + "','" + email + "','" + info + "')";
             db.run(sql, function (err) {
                 if (err) {
-                    res.render('Index', {re: "Has occurred an error",notifi:null, sess: req.session.acc});
+                    res.render('Index', {re: "Has occurred an error", notifi: null, sess: req.session.acc});
                     return;
                 }
                 // var db = new sqlite3.Database('database\\' + username + '.db');
-                req.session.acc = new users(username, pass1, pass2,  key,email, info);
+                req.session.acc = new users(username, pass1, pass2, key, email, info);
                 var userdb = new sqlite3.Database('database\\' + username + '.db');
                 userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
                     var a = [];
-                    // var mailOptions = new options('Nguyen tan hau', email, 'Key of JSQL', key);
-                    // // console.log(mailOptions);
-                    // // console.log(transporter);
+                    var mailOptions = new options('Nguyen tan hau', email, 'Key of JSQL', key);
+                    // console.log(mailOptions);
+                    // console.log(transporter);
                     // transporter.sendMail(mailOptions, function (error, info) {
                     //     if (error) {
                     //         res.render('Index', {re: "Has occurred an error when send key to you",notifi:null, sess: req.session.acc});
@@ -144,7 +144,11 @@ router.post('/Register', function (req, res, next) {
                     //         res.render('Index', {re: a,notifi:"Check your mail, we sent key to you", sess: req.session.acc});
                     //     }
                     // });
-                    res.render('Index', {re: a,notifi:"This is your key: "+key+". We only provided. If you forget it, please contact us", sess: req.session.acc});
+                    res.render('Index', {
+                        re: a,
+                        notifi: "This is your key: " + key + ". We only provided. If you forget it, please contact us",
+                        sess: req.session.acc
+                    });
                 });
             });
         }

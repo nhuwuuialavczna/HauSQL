@@ -11,6 +11,7 @@ var home = require('./routes/HomeController');
 var users = require('./routes/UserController');
 var db = require('./routes/DataBaseController');
 var error = require('./routes/ErrorController');
+var acc = require('./routes/ACCController');
 
 var app = express();
 
@@ -33,7 +34,8 @@ app.use('/Home', home);
 app.use('/Users', users);
 app.use('/DB', db);
 app.use('/Error', error);
-app.use(function(req, res, next) {
+app.use('/ACC', acc);
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
