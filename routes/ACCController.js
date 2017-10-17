@@ -41,7 +41,7 @@ router.get('/ExcuteACC', function (req, res, next) {
     var pass1 = req.param('pass1');
     var pass2 = req.param('pass2');
 
-    if (cmd === 'register') {
+    if (cmd == 'register') {
         var sooo = "select * from account where username='" + username + "'";
         db.all(sooo, function (err, row) {
             if (err) {
@@ -77,7 +77,7 @@ router.get('/ExcuteACC', function (req, res, next) {
                 row.forEach(function (t) {
                     var usa = new userACC(t.username, t.pass1, t.pass2, t.key, t.email, t.info);
                     var userdb = new sqlite3.Database('database\\' + usa.getUsername() + '.db');
-                    if (cmd === 'lock') {
+                    if (cmd == 'lock') {
                         var sql = "update account set info='no' where username ='" + usa.getUsername() + "'";
                         userdb.run(sql, function (err, row) {
                             if (err) {
@@ -87,7 +87,7 @@ router.get('/ExcuteACC', function (req, res, next) {
                             }
                         });
                     }
-                    if (cmd === 'unlock') {
+                    if (cmd == 'unlock') {
                         var sql = "update account set info='yes' where username ='" + usa.getUsername() + "'";
                         userdb.run(sql, function (err, row) {
                             if (err) {
@@ -97,10 +97,10 @@ router.get('/ExcuteACC', function (req, res, next) {
                             }
                         });
                     }
-                    if (cmd === 'info') {
+                    if (cmd =='info') {
                         res.json(usa);
                     }
-                    if(cmd==='getkey'){
+                    if(cmd=='getkey'){
                         res.send(usa.getKey());
                     }
                 });
