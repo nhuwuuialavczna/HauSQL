@@ -68,7 +68,7 @@ router.get('/ExcuteACC', function (req, res, next) {
         var sql = "select * from account where username='" + username + "' and pass1='" + pass1 + "' and pass2='" + pass2+"'";
         db.all(sql, function (err, row) {
             if (err) {
-                res.send('Has occurred an error');
+                res.send('Has occurred an error!');
             } else {
                 if (row.length === 0) {
                     res.send('Username or pass1 or pass2 or key is correct !');
