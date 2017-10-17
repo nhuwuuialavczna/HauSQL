@@ -65,7 +65,7 @@ router.get('/ExcuteACC', function (req, res, next) {
             }
         });
     } else {
-        var sql = "select * from account where username='" + username + "' and pass1='" + pass1 + "' and pass2='" + pass2+"'";
+        var sql = "select * from account where username='" + username + "' and pass1='" + pass1 + "' and pass2='" + pass2 + "'";
         db.all(sql, function (err, row) {
             if (err) {
                 res.send('Has occurred an error!');
@@ -75,7 +75,7 @@ router.get('/ExcuteACC', function (req, res, next) {
                     return;
                 }
                 row.forEach(function (t) {
-                    var usa = new userACC(t.username, t.pass1, t.pass2, t.key, t.email, t.info);
+                    var usa = new userACC(t.username, t.pass1, t.pass2, t.email, t.key, t.info);
                     if (cmd == 'lock') {
                         var sql = "update account set info='no' where username ='" + usa.getUsername() + "'";
                         db.run(sql, function (err, row) {
@@ -96,10 +96,10 @@ router.get('/ExcuteACC', function (req, res, next) {
                             }
                         });
                     }
-                    if (cmd =='info') {
-                        res.json(usa);
+                    if (cmd == 'info') {
+                        res.json({"result": usa});
                     }
-                    if(cmd=='getkey'){
+                    if (cmd == 'getkey') {
                         res.send(usa.getKey());
                     }
                 });
