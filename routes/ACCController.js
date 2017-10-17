@@ -76,10 +76,9 @@ router.get('/ExcuteACC', function (req, res, next) {
                 }
                 row.forEach(function (t) {
                     var usa = new userACC(t.username, t.pass1, t.pass2, t.key, t.email, t.info);
-                    var userdb = new sqlite3.Database('database\\' + usa.getUsername() + '.db');
                     if (cmd == 'lock') {
                         var sql = "update account set info='no' where username ='" + usa.getUsername() + "'";
-                        userdb.run(sql, function (err, row) {
+                        db.run(sql, function (err, row) {
                             if (err) {
                                 res.send("You can't unlock account");
                             } else {
@@ -89,7 +88,7 @@ router.get('/ExcuteACC', function (req, res, next) {
                     }
                     if (cmd == 'unlock') {
                         var sql = "update account set info='yes' where username ='" + usa.getUsername() + "'";
-                        userdb.run(sql, function (err, row) {
+                        db.run(sql, function (err, row) {
                             if (err) {
                                 res.send("You can't unlock account !");
                             } else {
