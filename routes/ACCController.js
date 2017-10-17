@@ -90,9 +90,9 @@ router.get('/ExcuteACC', function (req, res, next) {
                         var sql = "update account set info='yes' where username ='" + usa.getUsername() + "'";
                         userdb.run(sql, function (err, row) {
                             if (err) {
-                                res.send("You can't unlock account");
+                                res.send("You can't unlock account !");
                             } else {
-                                res.send("You unlocked account");
+                                res.send("You unlocked account !");
                             }
                         });
                     }
