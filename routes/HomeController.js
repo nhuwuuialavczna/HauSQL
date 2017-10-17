@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
         var userdb = new sqlite3.Database('database\\' + ss.username + '.db');
         userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
             if (err) {
-                res.redirect("/Error/ExcuteError?message=" + err.message);
+                res.redirect("/Error/ExcuteError?message=" + "Has occurred an error");
                 return;
             }
             var a = [];
@@ -30,7 +30,7 @@ router.get('/Index', function (req, res, next) {
         var userdb = new sqlite3.Database('database\\' + ss.username + '.db');
         userdb.all("SELECT name FROM sqlite_master WHERE type = 'table'", function (err, row) {
             if (err) {
-                res.redirect("/Error/ExcuteError?message=" + err.message);
+                res.redirect("/Error/ExcuteError?message=" + "Has occurred an error");
                 return;
             }
             var a = [];

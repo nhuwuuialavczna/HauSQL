@@ -13,7 +13,7 @@ var connection = function (sql, db, key, username) {
     this.addTable = function () {
         this.db.run(sql, function (err) {
             if (err) {
-                return err.message;
+                return "Has occurred an error";
             }
         });
         return "Success";
@@ -22,7 +22,7 @@ var connection = function (sql, db, key, username) {
     this.addRow = function () {
         this.db.run(sql, function (err) {
             if (err) {
-                return err.message;
+                return "Has occurred an error";
             }
         });
         return 'Success';
@@ -35,7 +35,7 @@ var connection = function (sql, db, key, username) {
     this.delete = function () {
         this.db.run(sql, function (err) {
             if (err) {
-                return err.message;
+                return "Has occurred an error";
             }
         });
         return 'Success';
@@ -44,7 +44,7 @@ var connection = function (sql, db, key, username) {
     this.update = function () {
         this.db.run(sql, function (err) {
             if (err) {
-                return err.message;
+                return "Has occurred an error";
             }
         });
         return 'Success';
@@ -153,12 +153,11 @@ router.get('/Return', function (req, res) {
     console.log(inforTable);
     var db = new sqlite3.Database('database\\' + ss.username + '.db');
     if (typeof inforTable !== 'undefined') {
-        console.log('co vào đây !');
         var sql = "select * from " + inforTable.name;
         // var conn = new connection(sql, db);
         db.all(sql, function (err, row) {
             if (err) {
-                res.redirect("/Error/ExcuteError?message=" + err.message);
+                res.redirect("/Error/ExcuteError?message=" + "Has occurred an error");
                 return;
             }
             var a = [];
@@ -184,7 +183,7 @@ router.get('/Manage', function (req, res, next) {
     // var x = conn.loadData();
     db.all("PRAGMA table_info(" + table + ")", function (err, row) {
         if (err) {
-            res.redirect("/Error/ExcuteError?message=" + err.message);
+            res.redirect("/Error/ExcuteError?message=" + "Has occurred an error");
             return;
         }
         var a = [];
@@ -193,10 +192,9 @@ router.get('/Manage', function (req, res, next) {
         });
         var inforTable = {name: table, listCol: a};
         var sql = "select * from " + inforTable.name;
-        // var conn = new connection(sql, db);
         db.all(sql, function (err, row) {
             if (err) {
-                res.redirect("/Error/ExcuteError?message=" + err.message);
+                res.redirect("/Error/ExcuteError?message=" + "Has occurred an error");
                 return;
             }
             var a = [];
